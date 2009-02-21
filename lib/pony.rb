@@ -61,6 +61,7 @@ module Pony
 		o = options[:smtp] || {}
 		smtp = Net::SMTP.new(o[:host], o[:port])
 		smtp.start(o[:domain], o[:user], o[:password], o[:auth])
+		smtp.sendmail(tmail.to_s, tmail.from, tmail.to)
 		smtp.finish
 	end
 end

@@ -67,8 +67,10 @@ describe Pony do
 
 		it "transports mail via Net::SMTP connecting to localhost" do
 			smtp = mock('net::smtp object')
-			Net::SMTP.should_receive(:start).with('localhost').and_yield(smtp)
+			Net::SMTP.should_receive(:new).with(nil, nil).and_return(smtp)
+			smtp.should_receive(:start).with(nil, nil, nil, nil)
 			smtp.should_receive(:sendmail).with('message', 'from', 'to')
+			smtp.should_receive(:finish)
 			Pony.transport_via_smtp(mock('tmail', :to => 'to', :from => 'from', :to_s => 'message'))
 		end
 	end
